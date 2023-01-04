@@ -1,0 +1,74 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{polski}
+\usepackage[font=scriptsize]{caption}
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{color, colortbl}
+\usepackage{tabularx}
+\usepackage[polish]{babel}
+
+\newcommand{\nl}{\\\hline}
+
+\begin{document}
+\title{
+    \huge{Sieci złożone} \\
+    \small{Sprawozdanie}
+}
+\author{Przemysław Barcicki}
+\maketitle
+
+\thispagestyle{empty}
+
+\section{Wstęp}
+Celem mojego zadania było zebranie danych na temat pewnej sieci złożonej oraz zbadanie jej pod względem różnych właściwości ze świata teorii grafów. Różnych sieci które charakteryzują się tą złożonością, jest wiele, przykładowo są to sieci współpracy, znajomości, kontaktów seksualnych czy nawet Internet.
+
+Do swoich badań wybrałem połączenia między artykułami na internetowej encyklopedii Wikipedia, gdzie, wierzchołkami w grafie są różne artykuły, a krawędziami (jednokieurnkowymi) są odnośniki i nawiązania między artykułami. Dzięki historii zmian przypisanego do każdej podstrony można dodatkowo zbadać dane artykułu pod względem rozwoju danej dziedziny, czy też rozwoju samego artykułu, w domenie czasowej. Aby nie dochodziło do dużego wybuchu ilości odnośników w swoich badaniach ograniczyłem się tylko do jednej konkretnej kategorii (artykuł \textit{Informatyka} ma 535 odnośników do innych artykułów z czego tylko 9 dotyczy surowej kategorii Informatyka\footnote{Stan na 03.01.2023})
+
+\section{Zbieranie danych}
+Zbieranie danych bazowało na wysyłaniu zapytań do ogólnodostępnego interfejsu programowego wikipedii, gdzie odpowiednio dobierając argumenty można było pytać o konkretne zasoby zawarte na stronie, bez ściągania jej całej razem z odpowiednim filtrowaniem danych. Tak jak wspomniałem wcześniej, dane filtrowane były na podstawie kategorii. W grafach wyjściowych znajdują się wszystkie artykły z kategorii oraz dodatkowo artykuł znajdujący się na obrzeżach który jako pierwszy wychodzi z danej kategorii (najczęściej będą to wierchołki ze stopniem 1).
+
+\section{Analiza danych}
+Analizę będę przedstawiał na zbiorze danych z kategorii informatyka. Najprostszym elementem do analizy jest przegląd jak zmieniała się wielkość kategorii w czasie.
+\begin{center}
+    \includegraphics[width=0.90\linewidth]{figures/size.pdf}
+    \captionof{figure}{Wykres przedstawiający wielkość kategorii Informatyka w czasie. Niebieskim kolorem przedstawiono artykuły, zielonym ilość połączeń między artykułami.}
+\end{center}
+Można zauważyć, że ilość połączeń między akrtykułami jest powiązana liniowo z ilością artykułów, sugeruje to że, artykuły dodawane do kategorii, nie nawiązują do dużej ilości innych artykułów w tej samej kategorii.
+
+Kolejno można przedstawić, jak zmieniała się gęstość grafu na przestrzeni czasu. Sama wielkość opisuje stosunek między ilością połączeń w grafie a ilością możliwych połączeń.
+\begin{center}
+    \includegraphics[width=0.90\linewidth]{figures/density.pdf}
+    \captionof{figure}{Wykres przedstawiający gęstość grafu opisującego kategorię Informatyka w czasie.}
+\end{center}
+Widać, że wraz z rozwojem informatyki na przestrzeni ostatnich 15 lat, graf się rozrzadził. Jest to logiczne, wraz z powstawaniem nowych podkategorii, zasięg informatyki zwiększa się, lecz niekoniecznie są one mocno powiązane z istniejącymi już kategoriami.
+
+Aby zbadać średnią długość (najkrótszej) ścieżki musimy skorzystać z pewnych uproszczeń, w których dla każdego grafu wybieramy największy słabo spójny komponent. Tym procesem nie tracimy dużo informacji z wykluczonych wierzchołków, ponieważ w każdym roku, wielkość największego komponentu stanowi przynajmniej 99.5\% wielkości całego grafu.
+
+\begin{center}
+    \includegraphics[width=0.90\linewidth]{figures/path.pdf}
+    \captionof{figure}{Wykres przedstawiający średnią długość najkrótszych ścieżek między wierzchołkami.}
+\end{center}
+Spadająca wartość średniej długości ścieżki może sugerować konsolidację poprzez powstanie tematów, kategorii czy artykułów które spinają ze sobą dalsze witryny, ale także, co widać po wykresie ilości wszystkich połączeń, że istniejące już tematy, zostały uzupełnione o odpowiednie odnośniki do istniejących wierzchołków.
+\newpage
+
+Kolejną istotną charakterystyką sieci połączeń jest rozkład stopni wierzchołków. Wielkość ta, może nam sugerować jak dobrze połączone są ze sobą konkretne tematy w konkretnej kategorii.
+\begin{center}
+    \includegraphics[width=0.90\linewidth]{figures/degreehist.pdf}
+    \captionof{figure}{Wykres przedstawiający rozkład stopni wierzchołków w grafie dla różnych lat.}
+\end{center}
+\begin{center}
+    \input{data/maxmean.tex}
+    \captionof{table}{Tabela przedstawiająca zmianę maksymalnej i średniej wartości stopnia wierzchołka na przestrzeni lat.}
+\end{center}
+
+Pewną dodatkową charakterystyką opisującą ważność danego wierzchołka jest jak wiele najkrótszych ścieżek przechodzi przez dany element w grafie, ta charakterystyka opisuje nam pewien najważniejszy centraly przegub którego usunięcie zmieniłoby strukturę całej sieci.
+
+\begin{center}
+    \input{data/joints.tex}
+    \captionof{table}{Tabela przedstawiająca wierzchołki z największą ilością ścieżek na przestrzeni lat.}
+\end{center}
+
+\end{document}
