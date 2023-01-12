@@ -2,7 +2,7 @@ from enum import Enum
 from urllib.parse import urlencode
 from typing import Dict, Any, Optional
 
-BASE_URL = "https://pl.wikipedia.org/w/api.php?"
+BASE_URL = "https://en.wikipedia.org/w/api.php?"
 
 # https://pl.wikipedia.org/w/api.php?action=parse&format=json&prop=links&oldid=57705342
 # https://pl.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Kategoria:Informatyka&cmlimit=max
