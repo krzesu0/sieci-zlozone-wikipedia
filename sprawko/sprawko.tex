@@ -7,6 +7,8 @@
 \usepackage{graphicx}
 \usepackage{longtable}
 \usepackage{color, colortbl}
+\usepackage[title]{appendix}
+\usepackage{hyperref}
 \usepackage{tabularx}
 \usepackage[polish]{babel}
 
@@ -28,47 +30,107 @@ Celem mojego zadania było zebranie danych na temat pewnej sieci złożonej oraz
 Do swoich badań wybrałem połączenia między artykułami na internetowej encyklopedii Wikipedia, gdzie, wierzchołkami w grafie są różne artykuły, a krawędziami (jednokieurnkowymi) są odnośniki i nawiązania między artykułami. Dzięki historii zmian przypisanego do każdej podstrony można dodatkowo zbadać dane artykułu pod względem rozwoju danej dziedziny, czy też rozwoju samego artykułu, w domenie czasowej. Aby nie dochodziło do dużego wybuchu ilości odnośników w swoich badaniach ograniczyłem się tylko do jednej konkretnej kategorii (artykuł \textit{Informatyka} ma 535 odnośników do innych artykułów z czego tylko 9 dotyczy surowej kategorii Informatyka\footnote{Stan na 03.01.2023})
 
 \section{Zbieranie danych}
-Zbieranie danych bazowało na wysyłaniu zapytań do ogólnodostępnego interfejsu programowego wikipedii, gdzie odpowiednio dobierając argumenty można było pytać o konkretne zasoby zawarte na stronie, bez ściągania jej całej razem z odpowiednim filtrowaniem danych. Tak jak wspomniałem wcześniej, dane filtrowane były na podstawie kategorii. W grafach wyjściowych znajdują się wszystkie artykły z kategorii oraz dodatkowo artykuł znajdujący się na obrzeżach który jako pierwszy wychodzi z danej kategorii (najczęściej będą to wierchołki ze stopniem 1).
+Zbieranie danych bazowało na wysyłaniu zapytań do ogólnodostępnego interfejsu programowego wikipedii, gdzie odpowiednio dobierając argumenty można było pytać o konkretne zasoby zawarte na stronie, bez ściągania jej całej, razem z odpowiednim filtrowaniem danych. Tak jak wspomniałem wcześniej, dane filtrowane były na podstawie kategorii. W grafach wyjściowych znajdują się wszystkie artykuły z kategorii oraz dodatkowo artykuł znajdujący się na obrzeżach który jako pierwszy wychodzi z danej kategorii (najczęściej będą to wierchołki ze stopniem 1).
 
 \section{Analiza danych}
-Analizę będę przedstawiał na zbiorze danych z kategorii informatyka. Najprostszym elementem do analizy jest przegląd jak zmieniała się wielkość kategorii w czasie.
+Analizę będę przedstawiał na zbiorze danych z polskiej kategorii informatyka. Najprostszym elementem do analizy jest przegląd jak zmieniała się wielkość kategorii w czasie. Wykres (\ref{fig:size_pl}) obrazuje tą zmianę w czasie.
 \begin{center}
-    \includegraphics[width=0.90\linewidth]{figures/size.pdf}
+    \includegraphics[width=0.90\linewidth]{figures/size_pl.pdf}
+    \label{fig:size_pl}
     \captionof{figure}{Wykres przedstawiający wielkość kategorii Informatyka w czasie. Niebieskim kolorem przedstawiono artykuły, zielonym ilość połączeń między artykułami.}
 \end{center}
 Można zauważyć, że ilość połączeń między akrtykułami jest powiązana liniowo z ilością artykułów, sugeruje to że, artykuły dodawane do kategorii, nie nawiązują do dużej ilości innych artykułów w tej samej kategorii.
 
 Kolejno można przedstawić, jak zmieniała się gęstość grafu na przestrzeni czasu. Sama wielkość opisuje stosunek między ilością połączeń w grafie a ilością możliwych połączeń.
 \begin{center}
-    \includegraphics[width=0.90\linewidth]{figures/density.pdf}
+    \includegraphics[width=0.90\linewidth]{figures/density_pl.pdf}
     \captionof{figure}{Wykres przedstawiający gęstość grafu opisującego kategorię Informatyka w czasie.}
+    \label{fig:denisty_pl}
 \end{center}
-Widać, że wraz z rozwojem informatyki na przestrzeni ostatnich 15 lat, graf się rozrzadził. Jest to logiczne, wraz z powstawaniem nowych podkategorii, zasięg informatyki zwiększa się, lecz niekoniecznie są one mocno powiązane z istniejącymi już kategoriami.
+Na wykresie (\ref{fig:denisty_pl}) widać, że wraz z rozwojem informatyki na przestrzeni ostatnich 15 lat, graf się rozrzadził. Jest to logiczne, wraz z powstawaniem nowych podkategorii, zasięg informatyki zwiększa się, lecz niekoniecznie są one mocno powiązane z istniejącymi już kategoriami.
 
 Aby zbadać średnią długość (najkrótszej) ścieżki musimy skorzystać z pewnych uproszczeń, w których dla każdego grafu wybieramy największy słabo spójny komponent. Tym procesem nie tracimy dużo informacji z wykluczonych wierzchołków, ponieważ w każdym roku, wielkość największego komponentu stanowi przynajmniej 99.5\% wielkości całego grafu.
 
 \begin{center}
-    \includegraphics[width=0.90\linewidth]{figures/path.pdf}
+    \includegraphics[width=0.90\linewidth]{figures/path_pl.pdf}
     \captionof{figure}{Wykres przedstawiający średnią długość najkrótszych ścieżek między wierzchołkami.}
+    \label{fig:path_pl}
 \end{center}
-Spadająca wartość średniej długości ścieżki może sugerować konsolidację poprzez powstanie tematów, kategorii czy artykułów które spinają ze sobą dalsze witryny, ale także, co widać po wykresie ilości wszystkich połączeń, że istniejące już tematy, zostały uzupełnione o odpowiednie odnośniki do istniejących wierzchołków.
+Spadająca wartość średniej długości ścieżki na wykresie (\ref{fig:path_pl}) może sugerować konsolidację poprzez powstanie tematów, kategorii czy artykułów które spinają ze sobą dalsze witryny, ale także, co widać po wykresie ilości wszystkich połączeń, że istniejące już tematy, zostały uzupełnione o odpowiednie odnośniki do istniejących wierzchołków.
 \newpage
 
-Kolejną istotną charakterystyką sieci połączeń jest rozkład stopni wierzchołków. Wielkość ta, może nam sugerować jak dobrze połączone są ze sobą konkretne tematy w konkretnej kategorii.
+Kolejną istotną charakterystyką sieci połączeń jest rozkład stopni wierzchołków. Wielkość ta, może nam sugerować jak dobrze połączone są ze sobą konkretne tematy w konkretnej kategorii. Histogram tego rozkładu przedstawia rysunek (\ref{fig:degreehist_pl}), a tabela (\ref{tab:maxmean_pl}) zawiera informację o maksymalnym i średnim wierzchołku.
+
 \begin{center}
-    \includegraphics[width=0.90\linewidth]{figures/degreehist.pdf}
+    \includegraphics[width=0.90\linewidth]{figures/degreehist_pl.pdf}
     \captionof{figure}{Wykres przedstawiający rozkład stopni wierzchołków w grafie dla różnych lat.}
+    \label{fig:degreehist_pl}
 \end{center}
 \begin{center}
-    \input{data/maxmean.tex}
     \captionof{table}{Tabela przedstawiająca zmianę maksymalnej i średniej wartości stopnia wierzchołka na przestrzeni lat.}
+    \input{data/maxmean_pl.tex}
+    \label{tab:maxmean_pl}
 \end{center}
 
-Pewną dodatkową charakterystyką opisującą ważność danego wierzchołka jest jak wiele najkrótszych ścieżek przechodzi przez dany element w grafie, ta charakterystyka opisuje nam pewien najważniejszy centraly przegub którego usunięcie zmieniłoby strukturę całej sieci.
+Pewną dodatkową charakterystyką opisującą ważność danego wierzchołka jest jak wiele najkrótszych ścieżek przechodzi przez dany element w grafie, ta charakterystyka opisuje nam pewien najważniejszy centraly przegub którego usunięcie zmieniłoby strukturę całej sieci. W tabeli (\ref{tab:joints_pl}) zawarto informację o ilości ścieżek przechodzących przez jaki wierzchołek.
+
+\newpage
 
 \begin{center}
-    \input{data/joints.tex}
     \captionof{table}{Tabela przedstawiająca wierzchołki z największą ilością ścieżek na przestrzeni lat.}
+    \input{data/joints_pl.tex}
+    \label{tab:joints_pl}
 \end{center}
+
+\section{Wnioski}
+Na przedstawionych wykresach, widać rozwój kategorii Informatyka, razem z rozwojem samej Wikipedii. Wraz z czasem pojawiło się tam kilkukrotnie więcej artykułów i połączeń między nimi, co można powiązać w dużej mierze z rozwojem informatyki, ale także większą dostępnością internetu dla ludzi w całym kraju. Im więcej ludzi z niej korzysta, tym więcej osób się znajdzie, którzy (za darmo) poświęcą swój czas i wiedzę dla rozwoju ogółu.
+
+\begin{appendices}
+
+\section{Angoljęzyczne porównanie}
+Poniższe rysunki (\ref{fig:size_en}, \ref{fig:density_en}, \ref{fig:path_en}, \ref{fig:degreehist_en}) oraz tabele (\ref{tab:joints_en}, \ref{tab:maxmean_en}) przedstawiają porównanie polskiej oraz anglojęzycznej wersji kategorii Informatyka na stronie Wikipedia.
+
+\begin{center}
+    \includegraphics[width=\linewidth]{figures/size_en.pdf}
+    \captionof{figure}{Wykres przedstawiający wielkość kategorii Informatyka w czasie. Niebieskim kolorem przedstawiono artykuły, zielonym ilość połączeń między artykułami.}
+    \label{fig:size_en}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=\linewidth]{figures/density_en.pdf}
+    \captionof{figure}{Wykres przedstawiający gęstość grafu opisującego kategorię Informatyka w czasie.}
+    \label{fig:density_en}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=\linewidth]{figures/path_en.pdf}
+    \captionof{figure}{Wykres przedstawiający średnią długość najkrótszych ścieżek między wierzchołkami.}
+    \label{fig:path_en}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=\linewidth]{figures/degreehist_en.pdf}
+    \captionof{figure}{Wykres przedstawiający rozkład stopni wierzchołków w grafie dla różnych lat.}
+    \label{fig:degreehist_en}
+\end{center}
+
+\begin{center}
+    \captionof{table}{Tabela przedstawiająca zmianę maksymalnej i średniej wartości stopnia wierzchołka na przestrzeni lat.}
+    \input{data/maxmean_en.tex}
+    \label{tab:maxmean_en}
+\end{center}
+
+\begin{center}
+    \captionof{table}{Tabela przedstawiająca wierzchołki z największą ilością ścieżek na przestrzeni lat.}
+    \input{data/joints_en.tex}
+    \label{tab:joints_en}
+\end{center}
+
+\newpage
+
+\section{Kod źródłowy}
+Cały kod źródłowy, tego sprawozdania, jak i kodu użytego do zbierania i obróki danych znajduje się w repozytorium Github. \\
+\noindent \url{https://github.com/mlodybercik/sieci-zlozone-wikipedia}
+\end{appendices}
 
 \end{document}

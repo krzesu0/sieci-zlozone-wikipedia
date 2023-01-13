@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 requests = "*"
 python-dateutil = "*"
+matplotlib = "*"
+networkx = "*"
 
 [dev-packages]
 ipykernel = "*"
