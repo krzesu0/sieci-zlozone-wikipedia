@@ -27,19 +27,19 @@
 \section{Wstęp}
 Celem mojego zadania było zebranie danych na temat pewnej sieci złożonej oraz zbadanie jej pod względem różnych właściwości ze świata teorii grafów. Różnych sieci które charakteryzują się tą złożonością, jest wiele, przykładowo są to sieci współpracy, znajomości, kontaktów seksualnych czy nawet Internet.
 
-Do swoich badań wybrałem połączenia między artykułami na internetowej encyklopedii Wikipedia, gdzie, wierzchołkami w grafie są różne artykuły, a krawędziami (jednokieurnkowymi) są odnośniki i nawiązania między artykułami. Dzięki historii zmian przypisanego do każdej podstrony można dodatkowo zbadać dane artykułu pod względem rozwoju danej dziedziny, czy też rozwoju samego artykułu, w domenie czasowej. Aby nie dochodziło do dużego wybuchu ilości odnośników w swoich badaniach ograniczyłem się tylko do jednej konkretnej kategorii (artykuł \textit{Informatyka} ma 535 odnośników do innych artykułów z czego tylko 9 dotyczy surowej kategorii Informatyka\footnote{Stan na 03.01.2023})
+Do swoich badań wybrałem połączenia między artykułami na internetowej encyklopedii Wikipedia, gdzie, wierzchołkami w grafie są różne artykuły, a krawędziami (jednokieurnkowymi) są odnośniki i nawiązania między artykułami. Dzięki historii zmian przypisanej do każdej podstrony można dodatkowo zbadać artykuł pod względem rozwoju danej dziedziny, czy też rozwoju samego artykułu, w domenie czasowej. Aby nie dochodziło do dużego wybuchu ilości odnośników w swoich badaniach ograniczyłem się tylko do jednej konkretnej kategorii (artykuł \textit{Informatyka} ma 535 odnośników do innych artykułów z czego tylko 9 dotyczy surowej kategorii Informatyka\footnote{Stan na 03.01.2023}). Analizę będę przedstawiał na zbiorze danych z polskiej kategorii informatyka.
 
 \section{Zbieranie danych}
-Zbieranie danych bazowało na wysyłaniu zapytań do ogólnodostępnego interfejsu programowego wikipedii, gdzie odpowiednio dobierając argumenty można było pytać o konkretne zasoby zawarte na stronie, bez ściągania jej całej, razem z odpowiednim filtrowaniem danych. Tak jak wspomniałem wcześniej, dane filtrowane były na podstawie kategorii. W grafach wyjściowych znajdują się wszystkie artykuły z kategorii oraz dodatkowo artykuł znajdujący się na obrzeżach który jako pierwszy wychodzi z danej kategorii (najczęściej będą to wierchołki ze stopniem 1).
+Zbieranie danych bazowało na wysyłaniu zapytań do ogólnodostępnego interfejsu programowego wikipedii, gdzie odpowiednio dobierając argumenty można było pytać o konkretne zasoby zawarte na stronie, bez ściągania jej całej, razem z odpowiednim filtrowaniem danych. Tak jak wspomniałem wcześniej, dane filtrowane były na podstawie kategorii. W grafach wyjściowych znajdują się wszystkie artykuły z kategorii oraz dodatkowo artykuł znajdujący się na obrzeżach, który jako pierwszy wychodzi z danej kategorii (najczęściej będą to wierzchołki ze stopniem 1).
 
 \section{Analiza danych}
-Analizę będę przedstawiał na zbiorze danych z polskiej kategorii informatyka. Najprostszym elementem do analizy jest przegląd jak zmieniała się wielkość kategorii w czasie. Wykres (\ref{fig:size_pl}) obrazuje tą zmianę w czasie.
+Najprostszym elementem do analizy jest przegląd jak zmieniała się wielkość kategorii w czasie. Wykres (\ref{fig:size_pl}) obrazuje tą zmianę w czasie.
 \begin{center}
     \includegraphics[width=0.90\linewidth]{figures/size_pl.pdf}
     \label{fig:size_pl}
     \captionof{figure}{Wykres przedstawiający wielkość kategorii Informatyka w czasie. Niebieskim kolorem przedstawiono artykuły, zielonym ilość połączeń między artykułami.}
 \end{center}
-Można zauważyć, że ilość połączeń między akrtykułami jest powiązana liniowo z ilością artykułów, sugeruje to że, artykuły dodawane do kategorii, nie nawiązują do dużej ilości innych artykułów w tej samej kategorii.
+Można zauważyć, że ilość połączeń między akrtykułami jest powiązana liniowo z liczbą artykułów, sugeruje to że, artykuły dodawane do kategorii, nie nawiązują do dużej ilości innych artykułów w tej samej kategorii.
 
 Kolejno można przedstawić, jak zmieniała się gęstość grafu na przestrzeni czasu. Sama wielkość opisuje stosunek między ilością połączeń w grafie a ilością możliwych połączeń.
 \begin{center}
